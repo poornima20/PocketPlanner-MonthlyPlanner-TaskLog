@@ -1,0 +1,158 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: #fffefc;
+  font-family: "DM Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* PAGE */
+.page {
+  width: 100%;                 /* ✅ full width */
+  height: 100dvh;
+  padding: clamp(16px, 3vw, 28px);
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* HEADER */
+.month-header {
+  flex: 0 0 auto; /* ✅ do not shrink */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(10px, 2vh, 18px);
+}
+
+
+.month-title {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+#monthName {
+  font-family: "Italianno", cursive;
+  font-size: clamp(36px, 7vw, 52px);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: #111;
+}
+
+
+
+#yearName {
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(18px, 3vw, 26px);
+  color: #9a9a9a;
+  margin-left: 4px;
+}
+
+
+.month-header h1 {
+  text-align: center;
+  font-family: Fraunces, serif;
+  font-size: clamp(22px, 3.8vw, 34px);
+}
+
+.month-actions {
+  margin-left: auto; /* 🔥 pushes actions to extreme right */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.month-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #b5b5b5;
+  padding: 4px;
+}
+
+.month-header button svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.5;
+}
+
+#todayBtn {
+  color: #999;
+}
+
+#todayBtn:hover {
+  color: #555;
+}
+
+/* LOG GRID */
+.log-grid {
+  flex: 1 1 auto; /* ✅ fills remaining height */
+  display: grid;
+  gap: 6px;
+}
+
+
+/* ROW */
+.log-row {
+  display: grid;
+  grid-template-columns: 48px 28px 1fr; /* WEEK | DATE | INPUT */
+  align-items: center;
+  font-family: "DM Sans", sans-serif;
+}
+
+/* WEEK */
+.log-week {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #999;
+}
+
+/* DATE */
+.log-date {
+  font-size: 13px;
+  color: #666;
+}
+
+/* INPUT — COMPLETELY BLANK */
+.log-input {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(8px, 2vw, 15px);
+  line-height: 1.2;
+
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+
+  padding-left: 6px;
+  caret-color: #555;
+}
+
+
+/* TODAY */
+.log-row.today {
+  background: rgba(0,0,0,0.04);
+  border-radius: 6px;
+}
+
+.log-row.weekend .log-week {
+  color: #b0b0b0;
+}
+
+.log-input {
+  caret-color: #666;
+}
+
+.log-input {
+  padding-left: 6px;
+}

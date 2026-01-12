@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Task Log</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Month font (elegant, journal-like) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Inter:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Italianno&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="page">
+<header class="month-header">    
+  <button id="prevMonth" aria-label="Previous month">
+    <i data-lucide="chevron-left"></i>  </button>
+
+  <div class="month-title">
+    <span id="monthName"></span>
+    <span id="yearName"></span>
+  </div>
+  <button id="nextMonth" aria-label="Next month">
+      <i data-lucide="chevron-right"></i>
+    </button>
+
+  <div class="month-actions">
+    
+
+    
+
+    <button id="todayBtn" aria-label="Go to today">
+      <i data-lucide="calendar-days"></i>
+    </button>
+  </div>
+</header>
+
+
+
+    <section id="logGrid" class="log-grid"></section>
+
+  </main>
+
+  <script src="script.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
