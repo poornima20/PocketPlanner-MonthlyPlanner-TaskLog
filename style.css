@@ -126,7 +126,7 @@ body {
 /* INPUT — COMPLETELY BLANK */
 .log-input {
   font-family: "Montserrat", sans-serif;
-  font-size: clamp(8px, 2vw, 15px);
+  font-size: clamp(10px, 2vw, 15px);
   line-height: 1.2;
 
   outline: none;
