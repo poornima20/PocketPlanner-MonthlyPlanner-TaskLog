@@ -41,7 +41,7 @@ function renderMonth(date) {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const rowDate = new Date(year, month, day);
-    const key = `monthly-log-${year}-${month + 1}-${day}`;
+    const key = `fullmoon.pocketplanner.tasklog.${year}-${month + 1}-${day}`;
 
     const row = document.createElement("div");
     row.className = "log-row";
