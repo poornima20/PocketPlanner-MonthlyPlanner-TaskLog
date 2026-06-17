@@ -1,158 +1,314 @@
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ==================================================
+   RESET
+================================================== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-body {
-  min-height: 100vh;
-  background: #fffefc;
-  font-family: "DM Sans", sans-serif;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
+html,
+body{
+  width:100%;
+  height:100%;
 }
 
-/* PAGE */
-.page {
-  width: 100%;                 /* ✅ full width */
-  height: 100dvh;
-  padding: clamp(16px, 3vw, 28px);
-  display: flex;
-  flex-direction: column;
+body{
+  background:#fffefc;
+  font-family:"DM Sans",sans-serif;
+  overflow:hidden;
 }
 
+/* ==================================================
+   PAGE
+================================================== */
 
-/* HEADER */
-.month-header {
-  flex: 0 0 auto; /* ✅ do not shrink */
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: clamp(10px, 2vh, 18px);
+.page{
+  width:100%;
+  height:100dvh;
+
+  display:flex;
+  flex-direction:column;
+
+  padding:20px 24px;
 }
 
+/* ==================================================
+   HEADER
+================================================== */
 
-.month-title {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
+.month-header{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+
+  margin-bottom:22px;
 }
 
-#monthName {
-  font-family: "Italianno", cursive;
-  font-size: clamp(36px, 7vw, 52px);
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  color: #111;
+.month-title{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-
-
-#yearName {
-  font-family: "DM Sans", sans-serif;
-  font-size: clamp(18px, 3vw, 26px);
-  color: #9a9a9a;
-  margin-left: 4px;
+#monthName{
+  font-family:"Caveat",cursive;
+  font-size:54px;
+  line-height:1;
+  color:#1f1f1f;
 }
 
+#yearName{
+  margin-top:2px;
 
-.month-header h1 {
+  font-size:11px;
+  letter-spacing:3px;
+  color:#9b9b9b;
+}
+
+/* ==================================================
+   TODAY BUTTON
+================================================== */
+
+.month-actions{
+  position:absolute;
+  left:0;
+
+  display:flex;
+  align-items:center;
+}
+
+#todayBtn{
+  width:34px;
+  height:34px;
+
+  border:none;
+  background:transparent;
+
+  color:#9f9f9f;
+  cursor:pointer;
+}
+
+#todayBtn svg{
+  width:18px;
+  height:18px;
+}
+
+/* ==================================================
+   MONTH NAVIGATION
+================================================== */
+
+#prevMonth,
+#nextMonth{
+  width:36px;
+  height:36px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:1px solid #ece7df;
+  border-radius:12px;
+
+  background:#fff;
+
+  cursor:pointer;
+}
+
+#prevMonth{
+  margin-right:14px;
+}
+
+#nextMonth{
+  margin-left:14px;
+}
+
+#prevMonth svg,
+#nextMonth svg{
+  width:16px;
+  height:16px;
+}
+
+/* ==================================================
+   GRID
+================================================== */
+
+.log-grid{
+  flex:1;
+
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  column-gap:40px;
+
+  position:relative;
+
+  min-height:0;
+}
+
+.log-grid::before{
+  content:"";
+
+  position:absolute;
+
+  left:50%;
+  top:0;
+  bottom:0;
+
+  width:1px;
+
+  background:#ece7df;
+}
+
+/* ==================================================
+   MONTH COLUMN
+================================================== */
+
+.month-column{
+  display:grid;
+  grid-auto-rows:minmax(24px,auto);
+  row-gap:4px;
+}
+
+/* ==================================================
+   ROW
+================================================== */
+
+.log-row{
+  display:grid;
+
+  grid-template-columns:
+    48px
+    32px
+    minmax(0,1fr);
+
+  align-items:center;
+
+  min-height:22px;
+}
+
+/* ==================================================
+   WEEKDAY
+================================================== */
+
+.log-week{
+  font-size:12px;
+  font-weight:700;
+
+  letter-spacing:.08em;
+
+  color:#000000;
+}
+
+.log-row.weekend .log-week{
+  color:#c2c2c2;
+}
+
+/* ==================================================
+   DATE
+================================================== */
+
+.log-date{
+  font-size:13px;
+  color:#727272;
+  font-weight: 600;
   text-align: center;
-  font-family: Fraunces, serif;
-  font-size: clamp(22px, 3.8vw, 34px);
 }
 
-.month-actions {
-  margin-left: auto; /* 🔥 pushes actions to extreme right */
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* ==================================================
+   INPUT
+================================================== */
+
+.log-input{
+  min-width:0;
+
+  padding-left:10px;
+
+  font-family:"Montserrat",sans-serif;
+  font-size:14px;
+
+  color:#222;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  outline:none;
+  caret-color:#666;
 }
 
+/* ==================================================
+   TODAY ROW
+================================================== */
 
-.month-header button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #b5b5b5;
-  padding: 4px;
+.log-row.today{
+  background:rgba(106, 106, 106, 0.064);
+  border-radius: 2px;
 }
 
-.month-header button svg {
-  width: 18px;
-  height: 18px;
-  stroke-width: 1.5;
-}
+/* ==================================================
+   MOBILE
+================================================== */
 
-#todayBtn {
-  color: #999;
-}
+@media (max-width:768px){
 
-#todayBtn:hover {
-  color: #555;
-}
+  .page{
+    padding:14px 16px;
+  }
 
-/* LOG GRID */
-.log-grid {
-  flex: 1 1 auto; /* ✅ fills remaining height */
-  display: grid;
-  gap: 6px;
-}
+  .month-header{
+    margin-bottom:16px;
+  }
 
+  #monthName{
+    font-size:42px;
+  }
 
-/* ROW */
-.log-row {
-  display: grid;
-  grid-template-columns: 48px 28px 1fr; /* WEEK | DATE | INPUT */
-  align-items: center;
-  font-family: "DM Sans", sans-serif;
-}
+  #yearName{
+    font-size:10px;
+    letter-spacing:2px;
+  }
 
-/* WEEK */
-.log-week {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: #999;
-}
+  .log-grid{
+    column-gap:18px;
+  }
 
-/* DATE */
-.log-date {
-  font-size: 13px;
-  color: #666;
-}
+  .log-row{
+    
+  grid-template-columns:
+    30px
+    18px
+    minmax(0,1fr);
 
-/* INPUT — COMPLETELY BLANK */
-.log-input {
-  font-family: "Montserrat", sans-serif;
-  font-size: clamp(12px, 2vw, 18px);
-  line-height: 1.2;
+    min-height:18px;
+  }
 
-  outline: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
+  .log-week{
+    font-size:9px;
+  }
 
-  padding-left: 6px;
-  caret-color: #555;
-}
+  .log-date{
+    font-size:10px;
+  }
 
+  .log-input{
+    font-size:10px;
+    padding-left:2px;
+  }
 
-/* TODAY */
-.log-row.today {
-  background: rgba(0,0,0,0.04);
-  border-radius: 6px;
-}
+  #prevMonth,
+  #nextMonth{
+    width:32px;
+    height:32px;
+  }
 
-.log-row.weekend .log-week {
-  color: #b0b0b0;
-}
-
-.log-input {
-  caret-color: #666;
-}
-
-.log-input {
-  padding-left: 6px;
+  #todayBtn{
+    width:30px;
+    height:30px;
+  }
 }

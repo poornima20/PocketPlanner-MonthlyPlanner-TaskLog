@@ -1,3 +1,4 @@
+const STORAGE_KEY = "fullmoon.pocketplanner.tasklog";
 const logGrid = document.getElementById("logGrid");
 const monthName = document.getElementById("monthName");
 const yearName = document.getElementById("yearName");
@@ -6,6 +7,49 @@ const nextBtn = document.getElementById("nextMonth");
 
 let currentDate = new Date();
 const MAX_CHARS = 65;
+
+
+function notifyDashboardSync() {
+  if (window.parent !== window) {
+    window.parent.postMessage(
+      {
+        type: "plannerChanged",
+        planner: STORAGE_KEY,
+      },
+      "*",
+    );
+  }
+}
+
+function loadData() {
+  const saved = JSON.parse(
+    localStorage.getItem(STORAGE_KEY)
+  );
+
+  return saved?.data || {};
+}
+
+function saveData(data) {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      data,
+      updatedAt: Date.now(),
+    }),
+  );
+
+  notifyDashboardSync();
+}
+
+let saveTimer;
+
+function queueSave(data) {
+  clearTimeout(saveTimer);
+
+  saveTimer = setTimeout(() => {
+    saveData(data);
+  }, 1000);
+}
 
 /* CARET HELPER */
 function placeCaretAtEnd(el) {
@@ -29,19 +73,21 @@ function renderMonth(date) {
   yearName.textContent = year;
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const midpoint = Math.ceil(daysInMonth / 2);
 
-  // Force rows to fit screen
-  const gridHeight = logGrid.clientHeight;
-  const gap = 6;
-  const rowHeight = Math.floor(
-    (gridHeight - gap * (daysInMonth - 1)) / daysInMonth
-  );
+  const leftColumn = document.createElement("div");
+  leftColumn.className = "month-column";
 
-  logGrid.style.gridTemplateRows = `repeat(${daysInMonth}, ${rowHeight}px)`;
+  const rightColumn = document.createElement("div");
+  rightColumn.className = "month-column";
+
+  logGrid.appendChild(leftColumn);
+  logGrid.appendChild(rightColumn);
 
   for (let day = 1; day <= daysInMonth; day++) {
     const rowDate = new Date(year, month, day);
-    const key = `fullmoon.pocketplanner.tasklog.${year}-${month + 1}-${day}`;
+    const today = new Date();
+    const plannerData = loadData();
 
     const row = document.createElement("div");
     row.className = "log-row";
@@ -54,7 +100,10 @@ function renderMonth(date) {
       row.classList.add("today");
     }
 
-    const inputValue = localStorage.getItem(key) || "";
+    const key =`${year}-${month + 1}-${day}`;
+
+const inputValue =
+plannerData[key] || "";
 
     row.innerHTML = `
       <div class="log-week">${rowDate
@@ -68,7 +117,7 @@ function renderMonth(date) {
     input.textContent = inputValue;
 
     /* BLOCK ENTER */
-    input.addEventListener("keydown", e => {
+    input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
       }
@@ -91,14 +140,19 @@ function renderMonth(date) {
         placeCaretAtEnd(input);
       }
 
-      localStorage.setItem(key, input.textContent);
+      plannerData[key] = input.textContent;
+      queueSave(plannerData);
     });
 
     if ([0, 6].includes(rowDate.getDay())) {
-            row.classList.add("weekend");
-            }
+      row.classList.add("weekend");
+    }
 
-    logGrid.appendChild(row);
+    if (day <= midpoint) {
+      leftColumn.appendChild(row);
+    } else {
+      rightColumn.appendChild(row);
+    }
   }
 }
 
@@ -116,11 +170,11 @@ nextBtn.onclick = () => {
 /* SWIPE SUPPORT */
 let touchStartX = 0;
 
-document.addEventListener("touchstart", e => {
+document.addEventListener("touchstart", (e) => {
   touchStartX = e.changedTouches[0].screenX;
 });
 
-document.addEventListener("touchend", e => {
+document.addEventListener("touchend", (e) => {
   const diff = e.changedTouches[0].screenX - touchStartX;
   if (Math.abs(diff) > 60) {
     diff < 0
@@ -139,5 +193,3 @@ todayBtn.onclick = () => {
   currentDate = new Date();
   renderMonth(currentDate);
 };
-
-
